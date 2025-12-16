@@ -12,10 +12,10 @@ function ProjectOverview() {
           padding: '3rem',
           marginBottom: '2rem'
         }}>
-          <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🐘</div>
-          <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>코끼리공장</h1>
+          <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📊</div>
+          <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>ESG 성과 지표 설명</h1>
           <p style={{ fontSize: '1.25rem', opacity: 0.95, lineHeight: '1.8' }}>
-            기업 ESG 캠페인 지속 참여를 위한 성과 측정 지표
+            코끼리공장 ESG 캠페인의 측정 가능한 성과 지표 체계
           </p>
         </div>
 

@@ -3,6 +3,7 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import HomePage from './components/HomePage';
+import KogongjangOverview from './components/KogongjangOverview';
 import ProjectOverview from './components/ProjectOverview';
 import Dashboard from './components/Dashboard';
 import CompanyList from './components/CompanyList';
@@ -15,6 +16,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<KogongjangOverview />} />
           <Route path="/overview" element={<ProjectOverview />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/companies" element={<CompanyList />} />

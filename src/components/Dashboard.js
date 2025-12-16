@@ -70,10 +70,153 @@ function Dashboard() {
   return (
     <div className="main-content">
       <div className="section">
-        <h1 className="section-title">📊 ESG 임팩트 대시보드</h1>
-        <p className="section-subtitle">
-          전체 기업의 ESG 성과를 실시간으로 시각화하고, 폐기물 유형별 기여도를 분석합니다
-        </p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
+          <div>
+            <h1 className="section-title">📊 ESG 임팩트 대시보드</h1>
+            <p className="section-subtitle">
+              전체 기업의 ESG 성과를 실시간으로 시각화하고, 폐기물 유형별 기여도를 분석합니다
+            </p>
+          </div>
+
+          {/* 데이터 내보내기 버튼 (UI 데모) */}
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+            <button
+              onClick={() => alert('PDF 보고서 다운로드 기능 (데모)\n\n실제 구현 시:\n- 전체 대시보드 내용을 PDF로 변환\n- 기업 로고 및 브랜딩 포함\n- 자동 생성된 분석 코멘트 추가')}
+              style={{
+                padding: '0.75rem 1.5rem',
+                backgroundColor: '#EF4444',
+                color: 'white',
+                border: 'none',
+                borderRadius: '0.5rem',
+                fontSize: '0.875rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}
+            >
+              📄 PDF 다운로드
+            </button>
+            <button
+              onClick={() => alert('Excel 데이터 내보내기 (데모)\n\n실제 구현 시:\n- 모든 수치 데이터를 Excel 형식으로 변환\n- 차트 및 그래프 포함\n- 피벗 테이블 분석용 시트 자동 생성')}
+              style={{
+                padding: '0.75rem 1.5rem',
+                backgroundColor: '#10B981',
+                color: 'white',
+                border: 'none',
+                borderRadius: '0.5rem',
+                fontSize: '0.875rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}
+            >
+              📊 Excel 내보내기
+            </button>
+            <button
+              onClick={() => alert('이미지로 저장 (데모)\n\n실제 구현 시:\n- 대시보드 전체 또는 선택 영역을 PNG 이미지로 저장\n- 프레젠테이션 및 보고서 삽입용')}
+              style={{
+                padding: '0.75rem 1.5rem',
+                backgroundColor: '#3B82F6',
+                color: 'white',
+                border: 'none',
+                borderRadius: '0.5rem',
+                fontSize: '0.875rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}
+            >
+              🖼️ PNG 저장
+            </button>
+          </div>
+        </div>
+
+        {/* 산업군 필터 UI (데모) */}
+        <div style={{
+          padding: '1.5rem',
+          backgroundColor: '#F9FAFB',
+          borderRadius: '0.75rem',
+          marginBottom: '2rem',
+          border: '2px solid #E5E7EB'
+        }}>
+          <div style={{ marginBottom: '1rem' }}>
+            <strong style={{ fontSize: '1rem', color: '#374151' }}>🔍 산업군별 필터</strong>
+            <span style={{ fontSize: '0.875rem', color: '#6B7280', marginLeft: '1rem' }}>
+              (데모 기능 - 실제 구현 시 산업군별 성과 비교 가능)
+            </span>
+          </div>
+          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <button style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: '#10B981',
+              color: 'white',
+              border: 'none',
+              borderRadius: '0.5rem',
+              fontSize: '0.875rem',
+              fontWeight: '600',
+              cursor: 'pointer'
+            }}>
+              전체
+            </button>
+            <button style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: 'white',
+              color: '#6B7280',
+              border: '1px solid #D1D5DB',
+              borderRadius: '0.5rem',
+              fontSize: '0.875rem',
+              fontWeight: '500',
+              cursor: 'pointer'
+            }}>
+              IT/테크
+            </button>
+            <button style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: 'white',
+              color: '#6B7280',
+              border: '1px solid #D1D5DB',
+              borderRadius: '0.5rem',
+              fontSize: '0.875rem',
+              fontWeight: '500',
+              cursor: 'pointer'
+            }}>
+              에너지
+            </button>
+            <button style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: 'white',
+              color: '#6B7280',
+              border: '1px solid #D1D5DB',
+              borderRadius: '0.5rem',
+              fontSize: '0.875rem',
+              fontWeight: '500',
+              cursor: 'pointer'
+            }}>
+              제조업
+            </button>
+            <button style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: 'white',
+              color: '#6B7280',
+              border: '1px solid #D1D5DB',
+              borderRadius: '0.5rem',
+              fontSize: '0.875rem',
+              fontWeight: '500',
+              cursor: 'pointer'
+            }}>
+              금융
+            </button>
+          </div>
+          <p style={{ fontSize: '0.8125rem', color: '#9CA3AF', marginTop: '0.75rem' }}>
+            💡 산업군 선택 시 해당 업종 평균 대비 성과를 비교할 수 있습니다
+          </p>
+        </div>
 
         {/* Tier 3: 통합 ESG 임팩트 스코어 */}
         <div className="section">

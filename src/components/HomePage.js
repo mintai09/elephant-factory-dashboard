@@ -27,17 +27,54 @@ function HomePage() {
   // Calculate average participation rate
   const avgParticipationRate = companies.reduce((sum, c) => sum + c.performance.participationRate, 0) / companies.length;
 
+  // Calculate ESG Impact Score (Tier 3)
+  const avgEScore = companies.reduce((sum, c) => sum + (c.kpi.eScore || 85), 0) / companies.length;
+  const avgSScore = companies.reduce((sum, c) => sum + (c.kpi.sScore || 92), 0) / companies.length;
+  const avgGScore = companies.reduce((sum, c) => sum + (c.kpi.gScore || 78), 0) / companies.length;
+  const esgImpactScore = (avgEScore * 0.5 + avgSScore * 0.3 + avgGScore * 0.2).toFixed(1);
+  const esgGrade = esgImpactScore >= 80 ? 'S' : esgImpactScore >= 60 ? 'A' : esgImpactScore >= 40 ? 'B' : 'C';
+
   return (
     <div>
       {/* 히어로 섹션 */}
       <section className="hero-section">
+        {/* ESG 통합 점수 배지 - 최상단 강조 */}
+        <div style={{
+          display: 'inline-block',
+          padding: '1rem 2rem',
+          backgroundColor: 'rgba(255,255,255,0.25)',
+          borderRadius: '50px',
+          marginBottom: '1.5rem',
+          backdropFilter: 'blur(10px)',
+          border: '2px solid rgba(255,255,255,0.3)'
+        }}>
+          <div style={{ fontSize: '0.875rem', opacity: 0.9, marginBottom: '0.25rem' }}>
+            통합 ESG 임팩트 스코어
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', justifyContent: 'center' }}>
+            <div style={{ fontSize: '3rem', fontWeight: '700' }}>{esgImpactScore}</div>
+            <div style={{
+              fontSize: '2rem',
+              fontWeight: '700',
+              padding: '0.5rem 1rem',
+              backgroundColor: esgGrade === 'S' ? '#10B981' : esgGrade === 'A' ? '#3B82F6' : '#F59E0B',
+              borderRadius: '0.5rem'
+            }}>
+              {esgGrade}등급
+            </div>
+          </div>
+          <div style={{ fontSize: '0.75rem', opacity: 0.85, marginTop: '0.5rem' }}>
+            E {avgEScore.toFixed(0)}점 (50%) · S {avgSScore.toFixed(0)}점 (30%) · G {avgGScore.toFixed(0)}점 (20%)
+          </div>
+        </div>
+
         <h1 className="hero-title">
-          ESG 임팩트, 이제는 측정하고 증명하십시오
+          데이터 기반 책임 경영으로 측정 가능한 임팩트 창출
         </h1>
         <p className="hero-subtitle">
-          KCGS, MSCI 등 공식 평가 기준에 자동 매핑되는 코끼리공장 대시보드 솔루션.
-          캠페인 성과를 주요 평가 지표와 실시간 연결하고, 내부 보고 시간을 획기적으로 단축하여
-          ESG 등급 상승의 기반을 마련하세요.
+          KCGS, MSCI, GRI 등 공식 ESG 평가 기준에 자동 매핑되는 코끼리공장 대시보드.
+          30분 걸리던 리포트 작업을 3분으로 단축하고,
+          B등급에서 A등급으로 상승한 기업들의 성공 비결을 확인하세요.
         </p>
 
         {/* 실시간 성과 카운터 */}
@@ -81,6 +118,40 @@ function HomePage() {
 
         <div style={{ marginTop: '2rem', fontSize: '1.125rem', opacity: 0.95 }}>
           💡 이는 소나무 {conversions.trees.toLocaleString()}그루를 심은 효과와 같습니다
+        </div>
+
+        {/* Primary CTA - 데모 요청 버튼 */}
+        <div style={{ marginTop: '3rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link
+            to="/dashboard"
+            className="btn btn-primary"
+            style={{
+              fontSize: '1.25rem',
+              padding: '1rem 2.5rem',
+              backgroundColor: 'white',
+              color: '#10B981',
+              fontWeight: '700',
+              boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+              transition: 'all 0.3s',
+              border: 'none'
+            }}
+          >
+            🚀 B→A 등급 상승! 우리 기업 대시보드 성과 미리보기
+          </Link>
+          <button
+            onClick={() => alert('데모 신청이 접수되었습니다! 담당자가 곧 연락드리겠습니다.')}
+            className="btn btn-outline"
+            style={{
+              fontSize: '1.125rem',
+              padding: '1rem 2rem',
+              backgroundColor: 'rgba(255,255,255,0.1)',
+              color: 'white',
+              border: '2px solid white',
+              fontWeight: '600'
+            }}
+          >
+            📧 데모 요청하기
+          </button>
         </div>
       </section>
 
@@ -129,6 +200,139 @@ function HomePage() {
             <Link to="/companies" className="btn btn-outline">
               🏢 기업별 성과 보기
             </Link>
+          </div>
+        </section>
+
+        {/* 파트너 성공 사례 섹션 - 새로 추가 */}
+        <section className="section">
+          <h2 className="section-title">🏆 파트너 성공 사례</h2>
+          <p className="section-subtitle">
+            코끼리공장 대시보드로 실제 ESG 등급을 상승시킨 파트너사들의 이야기
+          </p>
+
+          <div className="card-grid">
+            {/* B기업 ESG 등급 상승 사례 */}
+            <div className="card" style={{
+              background: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
+              borderLeft: '6px solid #3B82F6'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
+                <div>
+                  <div style={{ fontSize: '0.875rem', color: '#3B82F6', fontWeight: '600', marginBottom: '0.5rem' }}>
+                    SUCCESS STORY
+                  </div>
+                  <h3 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#1E40AF', marginBottom: '0.5rem' }}>
+                    B기업 → ESG B등급에서 A등급으로 상승!
+                  </h3>
+                </div>
+                <div style={{
+                  padding: '0.5rem 1rem',
+                  backgroundColor: '#3B82F6',
+                  color: 'white',
+                  borderRadius: '0.5rem',
+                  fontWeight: '700',
+                  fontSize: '1.25rem'
+                }}>
+                  B→A
+                </div>
+              </div>
+
+              <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '0.5rem', marginBottom: '1rem' }}>
+                <div style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '1rem', color: '#374151' }}>
+                  📊 1년간의 성과
+                </div>
+                <ul style={{ color: '#6B7280', lineHeight: '2', listStyle: 'none', padding: 0 }}>
+                  <li>✅ 탄소배출 2.8톤 저감 (전년 대비 +45%)</li>
+                  <li>✅ 업사이클 제품 판매 150% 증가</li>
+                  <li>✅ ESG 평가 B등급 → A등급 달성</li>
+                  <li>✅ 투자 유치 및 브랜드 이미지 개선</li>
+                </ul>
+              </div>
+
+              <div style={{
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                padding: '1rem',
+                borderRadius: '0.5rem',
+                borderLeft: '4px solid #3B82F6'
+              }}>
+                <div style={{ fontSize: '0.875rem', color: '#3B82F6', fontWeight: '600', marginBottom: '0.5rem' }}>
+                  💬 B기업 CSR 팀장 인터뷰
+                </div>
+                <p style={{ fontSize: '1rem', fontStyle: 'italic', color: '#1E40AF', lineHeight: '1.6' }}>
+                  "코끼리공장 덕분에 ESG 평가 B등급에서 A등급으로 상승했습니다!<br/>
+                  임원 보고할 때 자료가 정말 탄탄해서 신뢰도가 높아졌어요."
+                </p>
+              </div>
+
+              <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+                <Link to="/companies" style={{
+                  display: 'inline-block',
+                  padding: '0.75rem 1.5rem',
+                  backgroundColor: '#3B82F6',
+                  color: 'white',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  fontWeight: '600'
+                }}>
+                  우리 기업도 데이터로 ESG 성과 높이기 →
+                </Link>
+              </div>
+            </div>
+
+            {/* A기업 업계 최고 성과 사례 */}
+            <div className="card" style={{
+              background: 'linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)',
+              borderLeft: '6px solid #10B981'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
+                <div>
+                  <div style={{ fontSize: '0.875rem', color: '#10B981', fontWeight: '600', marginBottom: '0.5rem' }}>
+                    BEST PERFORMANCE
+                  </div>
+                  <h3 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#065F46', marginBottom: '0.5rem' }}>
+                    코멘토 - 12개 참여사 중 여러 지표 1위 달성
+                  </h3>
+                </div>
+                <div style={{
+                  padding: '0.5rem 1rem',
+                  backgroundColor: '#10B981',
+                  color: 'white',
+                  borderRadius: '0.5rem',
+                  fontWeight: '700',
+                  fontSize: '1.25rem'
+                }}>
+                  🥇
+                </div>
+              </div>
+
+              <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '0.5rem', marginBottom: '1rem' }}>
+                <div style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '1rem', color: '#374151' }}>
+                  🏆 업계 최고 수준 성과
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+                  <div style={{ textAlign: 'center', padding: '1rem', backgroundColor: '#F0FDF4', borderRadius: '0.5rem' }}>
+                    <div style={{ fontSize: '2rem', fontWeight: '700', color: '#10B981' }}>1,240kg</div>
+                    <div style={{ fontSize: '0.875rem', color: '#065F46' }}>폐자원 수거량 1위</div>
+                  </div>
+                  <div style={{ textAlign: 'center', padding: '1rem', backgroundColor: '#F0FDF4', borderRadius: '0.5rem' }}>
+                    <div style={{ fontSize: '2rem', fontWeight: '700', color: '#10B981' }}>7.70톤</div>
+                    <div style={{ fontSize: '0.875rem', color: '#065F46' }}>CO₂ 절감량 1위</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                padding: '1rem',
+                borderRadius: '0.5rem',
+                textAlign: 'center',
+                fontWeight: '600',
+                color: '#065F46',
+                fontSize: '1.125rem'
+              }}>
+                💡 코끼리공장을 통해 업계 최고 수준의 ESG 성과 달성 가능
+              </div>
+            </div>
           </div>
         </section>
 
@@ -193,28 +397,194 @@ function HomePage() {
           </div>
         </section>
 
-        {/* CTA 섹션 */}
+        {/* 신뢰성 및 투명성 섹션 - 새로 추가 */}
+        <section className="section">
+          <h2 className="section-title">✅ 신뢰할 수 있는 ESG 파트너</h2>
+          <p className="section-subtitle">
+            글로벌 ESG 기준 준수 및 투명한 성과 공유로 공신력 확보
+          </p>
+
+          <div className="card-grid">
+            <div className="card" style={{ textAlign: 'center', padding: '2rem' }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🏅</div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '1rem', color: '#10B981' }}>
+                글로벌 ESG 기준 자동 매핑
+              </h3>
+              <p style={{ color: '#6B7280', lineHeight: '1.8', marginBottom: '1rem' }}>
+                KCGS, MSCI, GRI 등 공식 평가체계에 자동 연동
+              </p>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <span style={{ padding: '0.5rem 1rem', backgroundColor: '#F3F4F6', borderRadius: '0.5rem', fontSize: '0.875rem', fontWeight: '600' }}>KCGS</span>
+                <span style={{ padding: '0.5rem 1rem', backgroundColor: '#F3F4F6', borderRadius: '0.5rem', fontSize: '0.875rem', fontWeight: '600' }}>MSCI</span>
+                <span style={{ padding: '0.5rem 1rem', backgroundColor: '#F3F4F6', borderRadius: '0.5rem', fontSize: '0.875rem', fontWeight: '600' }}>GRI</span>
+                <span style={{ padding: '0.5rem 1rem', backgroundColor: '#F3F4F6', borderRadius: '0.5rem', fontSize: '0.875rem', fontWeight: '600' }}>CDP</span>
+              </div>
+            </div>
+
+            <div className="card" style={{ textAlign: 'center', padding: '2rem' }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🤝</div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '1rem', color: '#3B82F6' }}>
+                사회적기업 인증 파트너 100%
+              </h3>
+              <p style={{ color: '#6B7280', lineHeight: '1.8', marginBottom: '1rem' }}>
+                모든 파트너십은 KCGS G-4 기준 충족
+              </p>
+              <div style={{ padding: '1rem', backgroundColor: '#EFF6FF', borderRadius: '0.5rem' }}>
+                <div style={{ fontSize: '2rem', fontWeight: '700', color: '#3B82F6' }}>100%</div>
+                <div style={{ fontSize: '0.875rem', color: '#1E40AF' }}>투명한 성과 공유 체계</div>
+              </div>
+            </div>
+
+            <div className="card" style={{ textAlign: 'center', padding: '2rem' }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📈</div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '1rem', color: '#F59E0B' }}>
+                지속 성장 중
+              </h3>
+              <p style={{ color: '#6B7280', lineHeight: '1.8', marginBottom: '1rem' }}>
+                전년 대비 35% 성장, 다음 분기 목표
+              </p>
+              <div style={{ padding: '1rem', backgroundColor: '#FEF3C7', borderRadius: '0.5rem' }}>
+                <div style={{ fontSize: '2rem', fontWeight: '700', color: '#F59E0B' }}>9,200kg</div>
+                <div style={{ fontSize: '0.875rem', color: '#92400E' }}>Q2 2025 수거량 목표</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Secondary CTA - 뉴스레터 구독 섹션 */}
         <section className="section">
           <div className="card" style={{
-            background: 'linear-gradient(135deg, #10B981 0%, #3B82F6 100%)',
+            background: 'linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%)',
+            padding: '3rem',
+            borderLeft: '6px solid #10B981'
+          }}>
+            <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+              <h2 style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '1rem', color: '#111827', textAlign: 'center' }}>
+                📬 ESG 트렌드 뉴스레터 구독
+              </h2>
+              <p style={{ fontSize: '1.125rem', color: '#6B7280', marginBottom: '2rem', textAlign: 'center', lineHeight: '1.8' }}>
+                단순 소식지가 아닌, 장기 파트너십을 위한 필수 정보 채널
+              </p>
+
+              <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '0.75rem', marginBottom: '2rem' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1.5rem', color: '#111827' }}>
+                  구독 혜택
+                </h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                  <div style={{ padding: '1rem', backgroundColor: '#F0FDF4', borderRadius: '0.5rem' }}>
+                    <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>📊</div>
+                    <div style={{ fontSize: '0.875rem', fontWeight: '600', color: '#065F46' }}>분기별 ESG 트렌드 리포트</div>
+                  </div>
+                  <div style={{ padding: '1rem', backgroundColor: '#EFF6FF', borderRadius: '0.5rem' }}>
+                    <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>💡</div>
+                    <div style={{ fontSize: '0.875rem', fontWeight: '600', color: '#1E40AF' }}>전문가 인사이트 제공</div>
+                  </div>
+                  <div style={{ padding: '1rem', backgroundColor: '#FEF3C7', borderRadius: '0.5rem' }}>
+                    <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🎁</div>
+                    <div style={{ fontSize: '0.875rem', fontWeight: '600', color: '#92400E' }}>신규 캠페인 사전 공개</div>
+                  </div>
+                  <div style={{ padding: '1rem', backgroundColor: '#FCE7F3', borderRadius: '0.5rem' }}>
+                    <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>💬</div>
+                    <div style={{ fontSize: '0.875rem', fontWeight: '600', color: '#831843' }}>파트너 인터뷰</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                <input
+                  type="email"
+                  placeholder="이메일 주소를 입력하세요"
+                  style={{
+                    flex: '1',
+                    minWidth: '250px',
+                    padding: '1rem',
+                    fontSize: '1rem',
+                    border: '2px solid #E5E7EB',
+                    borderRadius: '0.5rem',
+                    outline: 'none'
+                  }}
+                />
+                <button
+                  onClick={() => alert('뉴스레터 구독 신청이 완료되었습니다! 다음 분기 신규 캠페인 20% 할인 혜택을 받으실 수 있습니다.')}
+                  style={{
+                    padding: '1rem 2rem',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    backgroundColor: '#10B981',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '0.5rem',
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  무료 구독하기
+                </button>
+              </div>
+
+              <p style={{ fontSize: '0.875rem', color: '#9CA3AF', marginTop: '1rem', textAlign: 'center' }}>
+                ⚡ 조기 신청 시 다음 캠페인 20% 할인 혜택!
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ESG 캠페인 동참하기 CTA */}
+        <section className="section">
+          <div className="card" style={{
+            background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
             color: 'white',
             textAlign: 'center',
-            padding: '3rem'
+            padding: '3rem',
+            boxShadow: '0 10px 25px rgba(16, 185, 129, 0.3)'
           }}>
-            <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>
-              데이터가 이끄는 투명하고 효과적인 ESG 경영을 시작하세요
+            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🌱</div>
+            <h2 style={{ fontSize: '2rem', marginBottom: '1rem', fontWeight: '700' }}>
+              우리 기업도 ESG 캠페인에 동참하고 싶다면?
             </h2>
-            <p style={{ fontSize: '1.125rem', marginBottom: '2rem', opacity: 0.95 }}>
-              B → A 등급 상승, 우리 기업의 대시보드 성과를 미리 보세요
+            <p style={{ fontSize: '1.125rem', marginBottom: '2.5rem', opacity: 0.95, lineHeight: '1.8' }}>
+              지속 가능한 미래를 함께 만들어갈 파트너를 찾습니다.<br/>
+              측정 가능한 임팩트로 ESG 등급 상승의 기반을 마련하세요.
             </p>
-            <Link to="/dashboard" className="btn" style={{
-              backgroundColor: 'white',
-              color: '#10B981',
-              fontSize: '1.125rem',
-              padding: '1rem 2rem'
-            }}>
-              ESG 대시보드 데모 체험하기 →
-            </Link>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <a
+                href="https://kogongjang.com/theme/kogong/html/formmail/inquiry_01.php"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn"
+                style={{
+                  backgroundColor: 'white',
+                  color: '#10B981',
+                  fontSize: '1.25rem',
+                  padding: '1.25rem 2.5rem',
+                  textDecoration: 'none',
+                  fontWeight: '700',
+                  boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                  display: 'inline-block'
+                }}
+              >
+                🚀 ESG 캠페인 동참하기
+              </a>
+              <Link
+                to="/dashboard"
+                className="btn"
+                style={{
+                  backgroundColor: 'rgba(255,255,255,0.15)',
+                  color: 'white',
+                  fontSize: '1.125rem',
+                  padding: '1.25rem 2rem',
+                  textDecoration: 'none',
+                  border: '2px solid white',
+                  fontWeight: '600',
+                  display: 'inline-block'
+                }}
+              >
+                📊 성과 데이터 먼저 보기
+              </Link>
+            </div>
+            <p style={{ fontSize: '0.875rem', marginTop: '2rem', opacity: 0.85 }}>
+              💡 문의사항이 있으시면 언제든지 연락주세요. 맞춤형 ESG 솔루션을 제안해 드립니다.
+            </p>
           </div>
         </section>
       </div>

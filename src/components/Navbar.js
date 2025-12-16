@@ -15,7 +15,10 @@ function Navbar() {
             <Link to="/">홈</Link>
           </li>
           <li>
-            <Link to="/overview">프로젝트 개요</Link>
+            <Link to="/about">코끼리공장 개요</Link>
+          </li>
+          <li>
+            <Link to="/overview">ESG 성과 지표 설명</Link>
           </li>
           <li>
             <Link to="/dashboard">ESG 대시보드</Link>
